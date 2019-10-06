@@ -6,6 +6,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -70,6 +71,30 @@ public class RSAUtil {
 		byte[] bytes = cipher.doFinal(content);
 		return bytes;
 	}
+	
+	//私钥签名
+    public static String privateSign(byte[] content, String privateKey) throws Exception {
+        byte[] keyBytes = base642Byte(privateKey);
+        PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PrivateKey privateK = keyFactory.generatePrivate(pkcs8KeySpec);
+        Signature signature = Signature.getInstance("SHA256withRSA");
+        signature.initSign(privateK);
+        signature.update(content);
+        return byte2Base64(signature.sign());
+    }
+    
+    //公钥验签
+    public static boolean publicVerify(byte[] content, String publicKey, String sign) throws Exception {
+        byte[] keyBytes = base642Byte(publicKey);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicK = keyFactory.generatePublic(keySpec);
+        Signature signature = Signature.getInstance("SHA256withRSA");
+        signature.initVerify(publicK);
+        signature.update(content);
+        return signature.verify(base642Byte(sign));
+    }
 	
 	//字节数组转Base64编码
 	public static String byte2Base64(byte[] bytes){

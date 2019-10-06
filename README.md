@@ -1,7 +1,9 @@
 
-# fucking-util-signature RSA加解密 Java Demo
+# fucking-util-signature RSA加解密/签名验签 Java Demo
 
-#### 前端重要设置
+#### 签名算法默认使用 `SHA256withRSA`
+
+#### 前端加密重要设置
 ```javascript
 let rsa = new util.Signature.RSA ( );
 
@@ -9,7 +11,7 @@ let rsa = new util.Signature.RSA ( );
 rsa.keys.setOptions ( { encryptionScheme: 'pkcs1' } );
 ```
 
-#### 后端重要设置
+#### 后端加密重要设置
 ```java
 // 重要一致
 Cipher cipher = Cipher.getInstance ( "RSA/ECB/PKCS1Padding" );
