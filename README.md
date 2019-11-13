@@ -1,6 +1,8 @@
 
 # fucking-util-signature RSA加解密/签名验签 Java Demo
 
+#### js端全局集成无需多余设置: [fucking-util-signature-rsa-pkcs1padding](https://github.com/lipingruan/fucking-util-signature-rsa-pkcs1padding)
+
 #### 签名算法默认使用 `SHA256withRSA`
 
 #### 前端加密重要设置
